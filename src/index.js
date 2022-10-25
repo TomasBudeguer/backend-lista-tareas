@@ -3,6 +3,7 @@ import morgan from 'morgan'
 import cors from 'cors'
 import path from 'path'
 import './database'
+import tareasRouter from './routes/tareas.routes'
 const app = express()
 
 app.set('port', process.env.PORT || 4000)
@@ -21,7 +22,5 @@ app.use(express.static(path.join(__dirname, '../public')))
 
 // RUTAS:
 
-// http://localhost:4000/prueba
-app.get('/prueba', (req, res)=>{
-    res.send('Esto es una prueba de la peticion GET')
-})
+// http://localhost:4000/
+app.use('/apitareas', tareasRouter)
