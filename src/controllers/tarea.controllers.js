@@ -1,4 +1,5 @@
 import Tarea from "../models/tarea";
+import { validationResult } from "express-validator";
 
 export const listarTareas = async (req, res) => {
   try {
@@ -14,6 +15,12 @@ export const listarTareas = async (req, res) => {
 
 export const crearTarea = async (req, res) => {
   try {
+    const errores = validationResult(req);
+    if (!errores.isEmpty()) {
+      return res.status(400).json({
+        errores: errores.array(),
+      });
+    }
     const tareaNueva = new Tarea(req.body);
     await tareaNueva.save();
 
@@ -42,9 +49,15 @@ export const obtenerTarea = async (req, res) => {
 
 export const editarTarea = async (req, res) => {
   try {
+    const errores = validationResult(req);
+    if (!errores.isEmpty()) {
+      return res.status(400).json({
+        errores: errores.array(),
+      });
+    }
     await Tarea.findByIdAndUpdate(req.params.id, req.body);
     res.status(200).json({
-      mensaje: "a tarea fue modificada correctamente",
+      mensaje: "La tarea fue modificada correctamente",
     });
   } catch (error) {
     console.log(error);
