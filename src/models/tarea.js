@@ -5,6 +5,7 @@ const tareaSchema = new Schema({
     required: true,
     minLength: 2,
     maxLength: 20,
+    unique: true,
   },
 });
 
